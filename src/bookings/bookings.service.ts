@@ -10,8 +10,15 @@ export class BookingsService {
     private repo: Repository<Booking>,
   ) {}
 
-  findAll(filters?: { customerId?: string; barberId?: string; status?: string; dateFrom?: string; dateTo?: string }) {
-    const qb = this.repo.createQueryBuilder('booking')
+  findAll(filters?: {
+    customerId?: string;
+    barberId?: string;
+    status?: string;
+    dateFrom?: string;
+    dateTo?: string;
+  }) {
+    const qb = this.repo
+      .createQueryBuilder('booking')
       .leftJoinAndSelect('booking.customer', 'customer')
       .leftJoinAndSelect('booking.barber', 'barber')
       .leftJoinAndSelect('booking.service', 'service')
@@ -19,17 +26,27 @@ export class BookingsService {
       .orderBy('booking.date', 'DESC')
       .addOrderBy('booking.time', 'ASC');
 
-    if (filters?.customerId) qb.andWhere('booking.customer_id = :customerId', { customerId: filters.customerId });
-    if (filters?.barberId) qb.andWhere('booking.barber_id = :barberId', { barberId: filters.barberId });
-    if (filters?.status) qb.andWhere('booking.status = :status', { status: filters.status });
-    if (filters?.dateFrom) qb.andWhere('booking.date >= :dateFrom', { dateFrom: filters.dateFrom });
-    if (filters?.dateTo) qb.andWhere('booking.date <= :dateTo', { dateTo: filters.dateTo });
+    if (filters?.customerId)
+      qb.andWhere('booking.customer_id = :customerId', {
+        customerId: filters.customerId,
+      });
+    if (filters?.barberId)
+      qb.andWhere('booking.barber_id = :barberId', {
+        barberId: filters.barberId,
+      });
+    if (filters?.status)
+      qb.andWhere('booking.status = :status', { status: filters.status });
+    if (filters?.dateFrom)
+      qb.andWhere('booking.date >= :dateFrom', { dateFrom: filters.dateFrom });
+    if (filters?.dateTo)
+      qb.andWhere('booking.date <= :dateTo', { dateTo: filters.dateTo });
 
     return qb.getMany();
   }
 
   findOne(id: string) {
-    return this.repo.createQueryBuilder('booking')
+    return this.repo
+      .createQueryBuilder('booking')
       .leftJoinAndSelect('booking.customer', 'customer')
       .leftJoinAndSelect('booking.barber', 'barber')
       .leftJoinAndSelect('booking.service', 'service')
@@ -40,7 +57,8 @@ export class BookingsService {
 
   findTodays() {
     const today = new Date().toISOString().split('T')[0];
-    return this.repo.createQueryBuilder('booking')
+    return this.repo
+      .createQueryBuilder('booking')
       .leftJoinAndSelect('booking.customer', 'customer')
       .leftJoinAndSelect('booking.barber', 'barber')
       .leftJoinAndSelect('booking.service', 'service')
@@ -51,7 +69,8 @@ export class BookingsService {
   }
 
   findByDate(date: string) {
-    return this.repo.createQueryBuilder('booking')
+    return this.repo
+      .createQueryBuilder('booking')
       .leftJoinAndSelect('booking.customer', 'customer')
       .leftJoinAndSelect('booking.barber', 'barber')
       .leftJoinAndSelect('booking.service', 'service')
@@ -84,11 +103,19 @@ export class BookingsService {
     const today = new Date().toISOString().split('T')[0];
 
     const totalBookings = await this.repo.count();
-    const pendingBookings = await this.repo.count({ where: { status: 'pending' } });
-    const completedBookings = await this.repo.count({ where: { status: 'completed' } });
-    const todaysBookings = await this.repo.createQueryBuilder('b').where('b.date = :today', { today }).getCount();
+    const pendingBookings = await this.repo.count({
+      where: { status: 'pending' },
+    });
+    const completedBookings = await this.repo.count({
+      where: { status: 'completed' },
+    });
+    const todaysBookings = await this.repo
+      .createQueryBuilder('b')
+      .where('b.date = :today', { today })
+      .getCount();
 
-    const revenueResult = await this.repo.createQueryBuilder('b')
+    const revenueResult = await this.repo
+      .createQueryBuilder('b')
       .select('SUM(b.total_price)', 'revenue')
       .where('b.status = :status', { status: 'completed' })
       .getRawOne();

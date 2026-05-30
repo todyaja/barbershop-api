@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Put, Body, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { TimeSlotsService } from './time-slots.service';
 import { TimeSlot } from '../entities/time-slot.entity';
@@ -8,8 +17,16 @@ export class TimeSlotsController {
   constructor(private service: TimeSlotsService) {}
 
   @Get('available')
-  findAvailable(@Query('barberId') barberId: string, @Query('date') date: string) {
+  findAvailable(
+    @Query('barberId') barberId: string,
+    @Query('date') date: string,
+  ) {
     return this.service.findAvailable(barberId, date);
+  }
+
+  @Get('availability')
+  getAvailability(@Query('date') date: string) {
+    return this.service.getAvailability(date);
   }
 
   @Get('barber/:barberId')

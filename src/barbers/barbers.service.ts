@@ -15,7 +15,10 @@ export class BarbersService {
   }
 
   findActive() {
-    return this.repo.find({ where: { is_active: true }, order: { name: 'ASC' } });
+    return this.repo.find({
+      where: { is_active: true },
+      order: { name: 'ASC' },
+    });
   }
 
   findOne(id: string) {

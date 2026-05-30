@@ -34,7 +34,8 @@ export class PromoService {
     const now = new Date();
     const future = new Date();
     future.setDate(future.getDate() + days);
-    return this.rewardsRepo.createQueryBuilder('r')
+    return this.rewardsRepo
+      .createQueryBuilder('r')
       .leftJoinAndSelect('r.user', 'user')
       .where('r.is_used = false')
       .andWhere('r.expires_at >= :now', { now })
@@ -49,13 +50,24 @@ export class PromoService {
     });
   }
 
-  async grantCredits(userId: string, credits: number, note?: string, grantedBy?: string) {
-    const credit = this.creditsRepo.create({ user_id: userId, credits, note, granted_by: grantedBy });
+  async grantCredits(
+    userId: string,
+    credits: number,
+    note?: string,
+    grantedBy?: string,
+  ) {
+    const credit = this.creditsRepo.create({
+      user_id: userId,
+      credits,
+      note,
+      granted_by: grantedBy,
+    });
     return this.creditsRepo.save(credit);
   }
 
   async getTotalCredits(userId: string): Promise<number> {
-    const result = await this.creditsRepo.createQueryBuilder('c')
+    const result = await this.creditsRepo
+      .createQueryBuilder('c')
       .select('SUM(c.credits)', 'total')
       .where('c.user_id = :userId', { userId })
       .getRawOne();

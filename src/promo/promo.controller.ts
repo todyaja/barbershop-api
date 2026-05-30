@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PromoService } from './promo.service';
 import { PromoReward } from '../entities/promo-reward.entity';
@@ -45,7 +53,20 @@ export class PromoController {
 
   @Post('credits')
   @UseGuards(AuthGuard('jwt'))
-  grantCredits(@Body() body: { userId: string; credits: number; note?: string; grantedBy?: string }) {
-    return this.service.grantCredits(body.userId, body.credits, body.note, body.grantedBy);
+  grantCredits(
+    @Body()
+    body: {
+      userId: string;
+      credits: number;
+      note?: string;
+      grantedBy?: string;
+    },
+  ) {
+    return this.service.grantCredits(
+      body.userId,
+      body.credits,
+      body.note,
+      body.grantedBy,
+    );
   }
 }

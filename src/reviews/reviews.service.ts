@@ -11,7 +11,8 @@ export class ReviewsService {
   ) {}
 
   findAll(barberId?: string) {
-    const qb = this.repo.createQueryBuilder('review')
+    const qb = this.repo
+      .createQueryBuilder('review')
       .leftJoinAndSelect('review.customer', 'customer')
       .leftJoinAndSelect('review.barber', 'barber')
       .orderBy('review.created_at', 'DESC');
@@ -21,7 +22,8 @@ export class ReviewsService {
   }
 
   findByBooking(bookingId: string) {
-    return this.repo.createQueryBuilder('review')
+    return this.repo
+      .createQueryBuilder('review')
       .leftJoinAndSelect('review.customer', 'customer')
       .leftJoinAndSelect('review.barber', 'barber')
       .where('review.booking_id = :bookingId', { bookingId })
@@ -29,7 +31,8 @@ export class ReviewsService {
   }
 
   async getAverageRating(barberId: string): Promise<number> {
-    const result = await this.repo.createQueryBuilder('review')
+    const result = await this.repo
+      .createQueryBuilder('review')
       .select('AVG(review.rating)', 'avg')
       .where('review.barber_id = :barberId', { barberId })
       .getRawOne();

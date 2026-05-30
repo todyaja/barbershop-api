@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { BookingsService } from './bookings.service';
 import { Booking } from '../entities/booking.entity';
@@ -16,7 +26,13 @@ export class BookingsController {
     @Query('dateFrom') dateFrom?: string,
     @Query('dateTo') dateTo?: string,
   ) {
-    return this.service.findAll({ customerId, barberId, status, dateFrom, dateTo });
+    return this.service.findAll({
+      customerId,
+      barberId,
+      status,
+      dateFrom,
+      dateTo,
+    });
   }
 
   @Get('stats')

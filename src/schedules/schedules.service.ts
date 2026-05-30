@@ -11,11 +11,16 @@ export class SchedulesService {
   ) {}
 
   findByBarber(barberId: string) {
-    return this.repo.find({ where: { barber_id: barberId }, order: { day_of_week: 'ASC' } });
+    return this.repo.find({
+      where: { barber_id: barberId },
+      order: { day_of_week: 'ASC' },
+    });
   }
 
   findByBarberAndDay(barberId: string, dayOfWeek: number) {
-    return this.repo.findOneOrFail({ where: { barber_id: barberId, day_of_week: dayOfWeek } });
+    return this.repo.findOneOrFail({
+      where: { barber_id: barberId, day_of_week: dayOfWeek },
+    });
   }
 
   create(data: Partial<Schedule>) {

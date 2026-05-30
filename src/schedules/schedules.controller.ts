@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { SchedulesService } from './schedules.service';
 import { Schedule } from '../entities/schedule.entity';
@@ -13,7 +22,10 @@ export class SchedulesController {
   }
 
   @Get('barber/:barberId/day/:day')
-  findByBarberAndDay(@Param('barberId') barberId: string, @Param('day') day: string) {
+  findByBarberAndDay(
+    @Param('barberId') barberId: string,
+    @Param('day') day: string,
+  ) {
     return this.service.findByBarberAndDay(barberId, parseInt(day));
   }
 

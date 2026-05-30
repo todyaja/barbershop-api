@@ -14,8 +14,18 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { LoyaltyModule } from './loyalty/loyalty.module';
 import { PromoModule } from './promo/promo.module';
 import {
-  Branch, User, Service, Barber, Booking, Schedule,
-  TimeSlot, Payment, Review, LoyaltyStamp, PromoReward, PromoCredit,
+  Branch,
+  User,
+  Service,
+  Barber,
+  Booking,
+  Schedule,
+  TimeSlot,
+  Payment,
+  Review,
+  LoyaltyStamp,
+  PromoReward,
+  PromoCredit,
 } from './entities';
 
 @Module({
@@ -28,8 +38,18 @@ import {
         type: 'postgres',
         url: config.get<string>('DATABASE_URL'),
         entities: [
-          Branch, User, Service, Barber, Booking, Schedule,
-          TimeSlot, Payment, Review, LoyaltyStamp, PromoReward, PromoCredit,
+          Branch,
+          User,
+          Service,
+          Barber,
+          Booking,
+          Schedule,
+          TimeSlot,
+          Payment,
+          Review,
+          LoyaltyStamp,
+          PromoReward,
+          PromoCredit,
         ],
         synchronize: true,
       }),

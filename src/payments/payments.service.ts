@@ -28,7 +28,7 @@ export class PaymentsService {
     const payment = await this.repo.findOneOrFail({ where: { id } });
     payment.status = 'paid';
     payment.payment_date = new Date();
-    payment.transaction_id = transactionId || null as any;
+    payment.transaction_id = transactionId || (null as any);
     return this.repo.save(payment);
   }
 }

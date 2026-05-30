@@ -11,7 +11,10 @@ export class BranchesService {
   ) {}
 
   findAllActive() {
-    return this.repo.find({ where: { is_active: true }, order: { name: 'ASC' } });
+    return this.repo.find({
+      where: { is_active: true },
+      order: { name: 'ASC' },
+    });
   }
 
   findAll() {

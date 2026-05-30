@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Put, Body, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Body,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PaymentsService } from './payments.service';
 import { Payment } from '../entities/payment.entity';
@@ -27,7 +35,10 @@ export class PaymentsController {
 
   @Put(':id/mark-paid')
   @UseGuards(AuthGuard('jwt'))
-  markAsPaid(@Param('id') id: string, @Body('transactionId') transactionId?: string) {
+  markAsPaid(
+    @Param('id') id: string,
+    @Body('transactionId') transactionId?: string,
+  ) {
     return this.service.markAsPaid(id, transactionId);
   }
 }

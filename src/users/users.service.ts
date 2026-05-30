@@ -23,7 +23,10 @@ export class UsersService {
   }
 
   getCustomers() {
-    return this.repo.find({ where: { role: 'customer' }, order: { name: 'ASC' } });
+    return this.repo.find({
+      where: { role: 'customer' },
+      order: { name: 'ASC' },
+    });
   }
 
   create(data: Partial<User>) {
